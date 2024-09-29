@@ -1,0 +1,38 @@
+.header-container{
+	width: 100%;
+	background-color: #f8f9fa;
+}
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	padding: 10px 0;
+}
+.vh-80 {
+    height: 80vh;
+}
+.vh-70 {
+    height: 70vh;
+}
+
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    margin: 0px  5px;
+}
+.page-link {
+    color: #198754;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #198754;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+  <div layout:fragment="content" class="d-flex align-items-center justify-content-center  vh-70">
+ 
+	<main class="container mt-5">
+	    <div class="row">
+	        <div class="col-md-12 text-center">
+	            <h1><span th:text="${session.name}"></span>님! 환영합니다. </h1>
+	            <p>할일 목록으로 이동하려면 아래 버튼을 클릭하세요.</p>
+	            <a href="/todo/list-todos" class="btn btn-primary mt-3">Todo 목록으로</a>
+	        </div>
+	    </div>
+	</main>
+
+  </div>
+  
+</html>  
+
+

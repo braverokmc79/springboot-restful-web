@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="text-end mt-4">
+         <span th:text="${session.name}"></span>님  환영합니다.  - Todo 목록 개수: 
+         
+         
+         <span th:text="${totalTodosCount}"></span>
+         
+        </div>
+        <hr class="mb-4">
+        <h1 class="text-center mb-5">Todo 목록</h1>
+
+        <table class="table table-hover table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>no.</th>
+                    <th>사용자명</th>
+                    <th>설명</th>
+                    <th>목표 날짜</th>
+                    <th>완료 여부</th>
+                    <th class="text-center">작업</th>
+                </tr>
+            </thead>
+            <tbody>
+             	<!-- 데이터가 있는 경우 -->
+                <tr th:each="todo : ${todos}">
+                    <td th:text="${totalTodosCount-todo.num+1}"></td>
+                    <td th:text="${todo.username}"></td>
+                    <td th:text="${todo.description}"></td>
+                    <td th:text="${#temporals.format(todo.targetDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${todo.done ? '예' : '아니요'}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <!-- 삭제 버튼 클릭 시 모달 팝업을 띄우기 위해 data-bs-toggle과 data-bs-target 속성 추가 -->
+                            <button type="button" class="btn btn-danger btn-sm me-3" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                                th:attr="data-todo-id=${todo.id}">
+                                삭제
+                            </button>
+                            <a th:href="@{/todo/update-todo(id=${todo.id})}" class="btn btn-warning btn-sm ms-3">수정</a>
+                        </div>
+                    </td>
+                </tr>
+                 <!-- 데이터가 없는 경우 -->
+                 <tr th:if="${#lists.isEmpty(todos)}">
+                 	 <td colspan="6" class="text-center">데이터가 없습니다.</td>
+                 </tr>
+            </tbody>
+            
+            
+			<tfoot>
+            	<tr>
+            	  <td colspan="6">
+            	    <div class="mt-5">
+				      <div th:utext="${pagination}"></div>
+				    </div>				            	 
+            	  </td>
+            	</tr>
+            </tfoot>
+        </table>
+
+        <div class="text-center mt-4">
+            <a th:href="@{/todo/add-todo}" class="btn btn-success">Todo 추가</a>
+        </div>
+    </div>
+
+
+
+ 	<!-- 모달 HTML 코드 추가 -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">삭제 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <form th:action="@{/todo/delete-todo}" method="post">
+                        <input type="hidden" id="modalTodoId" name="id" value="">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // 모달이 열릴 때 선택한 todo의 id 값을 hidden input에 설정하는 스크립트
+    var deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // 모달을 트리거한 버튼
+        var todoId = button.getAttribute('data-todo-id'); // 버튼의 데이터 속성에서 todo id 가져오기
+        var modalTodoIdInput = document.getElementById('modalTodoId'); // 모달 안의 hidden input 요소
+        modalTodoIdInput.value = todoId; // hidden input에 id 설정
+    });
+</script>
+    
+    
+    
+    
+    
+    
+</div>
+
+</html>

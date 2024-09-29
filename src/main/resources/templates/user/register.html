@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout2}">
+
+<div layout:fragment="content"
+	class="d-flex align-items-center justify-content-center vh-80 ">
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<h2 class="text-center">회원가입</h2>
+
+
+					<form action="/user/register" method="post" th:object="${registerFormDTO}">
+					   
+			
+					    <!-- 필드 오류 메시지 처리 -->
+					    <div class="mb-3">
+					        <label for="username" class="form-label">아이디</label>
+					        <input type="text" class="form-control" id="username" th:field="*{username}" required>
+					        <div th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></div>
+					    </div>
+					    <div class="mb-3">
+					        <label for="password" class="form-label">비밀번호</label>
+					        <input type="password" class="form-control" id="password" th:field="*{password}" required>
+					        <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+					    </div>
+					    <div class="mb-3">
+					        <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+					        <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
+					        <div th:if="${#fields.hasErrors('confirmPassword')}" class="text-danger" th:errors="*{confirmPassword}"></div>
+					        <div th:if="${#fields.hasErrors('passwordConfirmed')}" class="text-danger" th:errors="*{passwordConfirmed}"></div>
+					    </div>
+					    <div class="d-grid">
+					        <button type="submit" class="btn btn-primary">회원가입</button>
+					    </div>
+					</form>
+
+
+				<div class="mt-3">
+					<p>
+						이미 계정이 있습니까? <a href="/user/login">로그인</a>
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+</html>
