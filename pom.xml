@@ -9,7 +9,7 @@
 		<version>3.3.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.springboot.webapp</groupId>
+	<groupId>net.macaronics.springboot.webapp</groupId>
 	<artifactId>springboot-webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot-restful-web</name>
