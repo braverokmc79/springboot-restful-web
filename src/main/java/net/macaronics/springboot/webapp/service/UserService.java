@@ -1,18 +1,15 @@
 package net.macaronics.springboot.webapp.service;
 
-import net.macaronics.springboot.webapp.dto.user.UserResponse;
-import net.macaronics.springboot.webapp.entity.User;
-import net.macaronics.springboot.webapp.exception.NotFoundException;
-import net.macaronics.springboot.webapp.repository.UserRepository;
-
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
+import net.macaronics.springboot.webapp.dto.user.UserResponse;
+import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.exception.NotFoundException;
+import net.macaronics.springboot.webapp.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -28,11 +25,11 @@ public class UserService {
     public User saveUser(User user) {
         // 비밀번호를 암호화하여 저장
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User savedUser=userRepository.save(user);  // 사용자 정보 저장
-        
+        User savedUser=userRepository.save(user);  // 사용자 정보 저장        
         return  savedUser;
     }
 
+    
     // 사용자 이름으로 사용자 정보를 조회하는 메서드
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);  // 사용자 이름으로 조회 후 반환
@@ -49,6 +46,7 @@ public class UserService {
 		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 찾을 수 없습니다."));		
 		return UserResponse.of(user); 		 
 	}
+	
 	
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import net.macaronics.springboot.webapp.dto.ResponseDTO;
 import net.macaronics.springboot.webapp.dto.user.RegisterFormDTO;
 import net.macaronics.springboot.webapp.dto.user.UserResponse;
 import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.exception.NotFoundException;
 import net.macaronics.springboot.webapp.service.UserService;
 import net.macaronics.springboot.webapp.utils.PageMaker;
 
@@ -97,21 +99,24 @@ public class ApiUserController {
      * @param registerFormDTO
      * @param bindingResult
      * @return
+     * @throws MethodArgumentNotValidException 
      */
     @PostMapping
     @Operation(summary = "사용자 생성", description = "새 사용자를 등록합니다.")
-    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterFormDTO registerFormDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterFormDTO registerFormDTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
         
         // 입력 검증 오류 처리
         if (bindingResult.hasErrors()) { 
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            throw  new MethodArgumentNotValidException(null, bindingResult);
         }
         
         // 중복 사용자 확인
         if (userService.findByUsername(registerFormDTO.getUsername()) != null) {  // 이미 존재하는 아이디일 경우
             bindingResult.rejectValue("username", "error.username", "이미 사용 중인 아이디입니다.");              
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            throw  new MethodArgumentNotValidException(null, bindingResult);
         }
+        
+        
         
         // DTO를 User 객체로 변환 후 저장
         User user = RegisterFormDTO.toCreateUser(registerFormDTO);  // DTO를 User 객체로 변환
