@@ -2,7 +2,7 @@ package net.macaronics.springboot.webapp.service;
 
 import net.macaronics.springboot.webapp.dto.user.UserResponse;
 import net.macaronics.springboot.webapp.entity.User;
-import net.macaronics.springboot.webapp.exception.UserNotFoundException;
+import net.macaronics.springboot.webapp.exception.NotFoundException;
 import net.macaronics.springboot.webapp.repository.UserRepository;
 
 import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
@@ -46,7 +46,7 @@ public class UserService {
 	}
 
 	public UserResponse getUserById(Long id) {
-		User user= userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id+""));		
+		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 찾을 수 없습니다."));		
 		return UserResponse.of(user); 		 
 	}
 	

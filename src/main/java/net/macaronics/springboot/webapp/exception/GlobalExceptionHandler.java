@@ -10,15 +10,17 @@ import net.macaronics.springboot.webapp.dto.ResponseDTO;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ResponseDTO<?>> handleUserNotFoundException(UserNotFoundException ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ResponseDTO<?>> handleNotFoundException(NotFoundException ex) {
         ResponseDTO<?> response = ResponseDTO.builder()
-            .code(404)
+            .code(-1)
             .message(ex.getMessage())
             .data(null)
+            .errorCode("NOT_FOUND")
             .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    
     // 기타 예외 핸들러 추가 가능
 }
