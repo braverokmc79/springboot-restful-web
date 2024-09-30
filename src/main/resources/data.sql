@@ -1,6 +1,6 @@
 -- 유저 더이데이터 10개   비번 : 1111
 
-INSERT INTO users (username, password, birthDate, role) VALUES
+INSERT INTO users (username, password, birth_Date, role) VALUES
 ('user1', '$2a$10$8VKmqNwV0x/bQEN8Z54w7uUpLPTGeHgoJR73dyH2S6ZxoHkVkxGSm', '1994-09-29', 'USER'),
 ('user2', '$2a$10$8VKmqNwV0x/bQEN8Z54w7uUpLPTGeHgoJR73dyH2S6ZxoHkVkxGSm', '2000-10-29', 'USER'),
 ('user3', '$2a$10$8VKmqNwV0x/bQEN8Z54w7uUpLPTGeHgoJR73dyH2S6ZxoHkVkxGSm', '1995-09-29', 'USER'),

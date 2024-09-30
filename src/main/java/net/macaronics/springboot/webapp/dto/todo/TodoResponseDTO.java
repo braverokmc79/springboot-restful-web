@@ -1,4 +1,4 @@
-package net.macaronics.springboot.webapp.dto;
+package net.macaronics.springboot.webapp.dto.todo;
 
 import java.time.LocalDate;
 

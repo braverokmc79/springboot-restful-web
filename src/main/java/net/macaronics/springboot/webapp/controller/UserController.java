@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.macaronics.springboot.webapp.dto.RegisterFormDTO;
+import net.macaronics.springboot.webapp.dto.user.RegisterFormDTO;
 import net.macaronics.springboot.webapp.entity.User;
 import net.macaronics.springboot.webapp.service.UserService;
 

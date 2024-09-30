@@ -9,7 +9,8 @@ import org.springframework.data.support.PageableExecutionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.macaronics.springboot.webapp.dto.TodoResponseDTO;
+
+import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 import net.macaronics.springboot.webapp.entity.QTodo;
 import net.macaronics.springboot.webapp.entity.QUser;
 import net.macaronics.springboot.webapp.entity.User;

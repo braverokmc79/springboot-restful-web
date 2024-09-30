@@ -1,7 +1,9 @@
-package net.macaronics.springboot.webapp.dto;
+package net.macaronics.springboot.webapp.dto.user;
 
 import net.macaronics.springboot.webapp.entity.User;
 import net.macaronics.springboot.webapp.enums.Role;
+
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotEmpty;
@@ -28,6 +30,9 @@ public class RegisterFormDTO {
     @NotEmpty(message = "비밀번호 확인이 필요합니다.")
     private String confirmPassword;
 
+    
+    private LocalDate birthDate;
+    
     private Role role;
 
     // 비밀번호와 비밀번호 확인이 일치하는지 확인
@@ -41,8 +46,10 @@ public class RegisterFormDTO {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
+		user.setBirthDate(dto.getBirthDate());
         user.setRole(Role.USER);
         return user;
     }
+    
 }
 

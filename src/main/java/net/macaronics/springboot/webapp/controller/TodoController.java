@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.macaronics.springboot.webapp.config.PrincipalDetails;
-import net.macaronics.springboot.webapp.dto.TodoFormDTO;
-import net.macaronics.springboot.webapp.dto.TodoResponseDTO;
+import net.macaronics.springboot.webapp.dto.todo.TodoFormDTO;
+import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 import net.macaronics.springboot.webapp.entity.Todo;
 import net.macaronics.springboot.webapp.service.TodoService;
 import net.macaronics.springboot.webapp.utils.PageMaker;

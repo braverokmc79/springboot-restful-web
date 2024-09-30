@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.macaronics.springboot.webapp.dto.TodoResponseDTO;
+import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 import net.macaronics.springboot.webapp.entity.Todo;
 import net.macaronics.springboot.webapp.entity.User;
 import net.macaronics.springboot.webapp.repository.TodoRepository;

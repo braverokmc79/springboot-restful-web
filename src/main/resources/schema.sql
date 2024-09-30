@@ -2,7 +2,7 @@ CREATE TABLE users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255),
-    birthDate timestamp,
+    birth_Date DATE,
     role VARCHAR(50)
 );
 
