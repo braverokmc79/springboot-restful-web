@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
         
         ResponseDTO<?> response = ResponseDTO.builder()
-            .code(HttpStatus.NOT_FOUND.value())
+            .code(-1)
             .message("Resource Not Found")
             .data(errorDetails)
             .errorCode("NOT_FOUND")

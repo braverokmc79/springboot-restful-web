@@ -1,25 +1,31 @@
 package net.macaronics.springboot.webapp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import net.macaronics.springboot.webapp.dto.user.UserResponse;
 import net.macaronics.springboot.webapp.entity.User;
 import net.macaronics.springboot.webapp.exception.NotFoundException;
+import net.macaronics.springboot.webapp.repository.TodoRepository;
 import net.macaronics.springboot.webapp.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;  // User 정보를 관리하는 Repository
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;  // 비밀번호를 암호화하기 위한 PasswordEncoder
-
+    private final UserRepository userRepository;  // User 정보를 관리하는 Repository
+  
+    private final PasswordEncoder passwordEncoder;  // 비밀번호를 암호화하기 위한 PasswordEncoder
+ 
+    private final TodoRepository todoRepository;
+    
+    
     
     // 사용자를 저장하는 메서드
     public User saveUser(User user) {
@@ -45,6 +51,15 @@ public class UserService {
 	public UserResponse getUserById(Long id) {
 		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 찾을 수 없습니다."));		
 		return UserResponse.of(user); 		 
+	}
+
+
+	public void deleteUser(Long id) {
+		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 사용자를 찾을 수 없습니다."));
+			
+        todoRepository.deleteByUserId(user.getId());
+        
+		userRepository.delete(user);
 	}
 	
 	

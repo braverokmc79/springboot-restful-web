@@ -13,7 +13,9 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,7 +141,32 @@ public class ApiUserController {
     
    
     
-    
+    /** http://localhost:8080/api/users/{id}
+     * 4. 사용자 삭제
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @Operation(summary = "사용자 삭제", description = "특정 사용자를 삭제합니다.")
+    public ResponseEntity<?> deleteUser(@Parameter(description = "아이디", example = "1") @PathVariable Long id){
+  
+        // 사용자 삭제
+        userService.deleteUser(id);
+                
+       //삭제 후 가능한 다음 행동들에 대한 HATEOAS 링크 추가
+        CollectionModel<UserResponse> collectionModel = CollectionModel.empty();        
+        collectionModel.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).userListAll(new PageMaker())).withRel("all-users"));
+                
+        ResponseDTO<?> response = ResponseDTO.builder()
+            .code(1)
+            .message("성공적으로삭제 처리 되었습니다.")
+            .data(collectionModel)
+            .build();
+        
+        return ResponseEntity.ok()
+            .body(response);
+    }
+
     
     
     

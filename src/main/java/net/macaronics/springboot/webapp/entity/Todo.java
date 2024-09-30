@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Todo {
     @Column(name = "todo_id")
     private Long id;
     
-    @ManyToOne(fetch = FetchType.LAZY)  // 사용자와 다대일 관계 설정 (Lazy Loading)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // 사용자와 다대일 관계 설정 (Lazy Loading)
     @JoinColumn(name = "user_id")  // 외래키로 "user_id" 컬럼을 사용
     private User user;
     
