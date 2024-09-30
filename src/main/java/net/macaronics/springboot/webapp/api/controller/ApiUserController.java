@@ -40,6 +40,13 @@ public class ApiUserController {
 
     private final UserService userService;  
     
+    /** HATEOAS 링크 추가 메서드 */
+    private UserResponse addUserLinks(UserResponse userResponse) {
+        userResponse.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).getUserById(userResponse.getId())).withSelfRel());
+        return userResponse;
+    }
+    
+    
     /**  http://localhost:8080/api/users
      * 1. 전체 사용자 목록 조회
      * @param pageMaker
@@ -54,10 +61,7 @@ public class ApiUserController {
         Page<UserResponse> pageUserResponse = userService.userListAll(pageable);
          
         // 1. 각 사용자에 대한 HATEOAS 링크 추가
-        List<UserResponse> userList = pageUserResponse.getContent().stream().map(user -> {        	
-            user.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).getUserById(user.getId())).withSelfRel());
-            return user;
-        }).collect(Collectors.toList());
+        List<UserResponse> userList = pageUserResponse.getContent().stream().map(this::addUserLinks).collect(Collectors.toList());
  
         CollectionModel<UserResponse> collectionModel = CollectionModel.of(userList);
         
@@ -83,8 +87,7 @@ public class ApiUserController {
     @GetMapping("/{id}")
     @Operation(summary = "개별 사용자 조회 메소드", description = "개별 사용자의 정보를 제공합니다.")
     public ResponseEntity<?> getUserById(@Parameter(description = "아이디", example = "1") @PathVariable Long id){
-        UserResponse user = userService.getUserById(id);
-        user.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).getUserById(id)).withSelfRel());
+    	UserResponse user = addUserLinks(userService.getUserById(id));
         return ResponseEntity.ok(user);
     }
     
@@ -116,10 +119,7 @@ public class ApiUserController {
         
         // 생성된 사용자의 URI 생성
         URI location = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).getUserById(savedUser.getId())).toUri();
-        
-        // HATEOAS 링크 추가
-        UserResponse userResponse = UserResponse.of(savedUser);
-        userResponse.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiUserController.class).getUserById(savedUser.getId())).withSelfRel());
+        UserResponse userResponse = addUserLinks(UserResponse.of(savedUser));
         
         return ResponseEntity.created(location)
             .body(ResponseDTO.builder()
@@ -129,6 +129,14 @@ public class ApiUserController {
                 .build()
             );
     }
+    
+    
+    
+   
+    
+    
+    
+    
     
     
     
