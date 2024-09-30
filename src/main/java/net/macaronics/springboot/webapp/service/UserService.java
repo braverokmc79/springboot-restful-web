@@ -2,7 +2,10 @@ package net.macaronics.springboot.webapp.service;
 
 import net.macaronics.springboot.webapp.dto.user.UserResponse;
 import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.exception.UserNotFoundException;
 import net.macaronics.springboot.webapp.repository.UserRepository;
+
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +46,7 @@ public class UserService {
 	}
 
 	public UserResponse getUserById(Long id) {
-		User user= userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		User user= userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id+""));		
 		return UserResponse.of(user); 		 
 	}
 	
