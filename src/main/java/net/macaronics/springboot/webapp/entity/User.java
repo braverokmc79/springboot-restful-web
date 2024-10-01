@@ -2,6 +2,7 @@ package net.macaronics.springboot.webapp.entity;
 
 import java.time.LocalDate;
 
+import net.macaronics.springboot.webapp.dto.user.UserUpdateFormDTO;
 import net.macaronics.springboot.webapp.enums.Role;
 
 import jakarta.persistence.Column;
@@ -49,6 +50,15 @@ public class User {
     	this.password="$2a$10$8VKmqNwV0x/bQEN8Z54w7uUpLPTGeHgoJR73dyH2S6ZxoHkVkxGSm";
 		this.username = username;		
 		this.birthDate = birthDate;
+	}
+
+
+    //더티 체킹 업데이트
+	public static User updateUser(User user, UserUpdateFormDTO updateFormDTO) {
+		user.setPassword(updateFormDTO.getPassword());
+		user.setBirthDate(updateFormDTO.getBirthDate());
+		user.setRole(updateFormDTO.getRole());		
+		return user;
 	}
     
 }

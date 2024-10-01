@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import net.macaronics.springboot.webapp.dto.user.RegisterFormDTO;
+import net.macaronics.springboot.webapp.dto.user.UserRegisterFormDTO;
 import net.macaronics.springboot.webapp.entity.User;
 import net.macaronics.springboot.webapp.service.UserService;
 
@@ -29,13 +29,13 @@ public class UserController {
 
     // 회원가입 페이지를 보여주는 메서드
     @GetMapping("/register")
-    public String showRegisterPage(@ModelAttribute("registerFormDTO") RegisterFormDTO registerFormDTO) {
+    public String showRegisterPage(@ModelAttribute("registerFormDTO") UserRegisterFormDTO registerFormDTO) {
         return "user/register";  // 회원가입 페이지 반환
     }
 
     // 회원가입을 처리하는 메서드
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("registerFormDTO") RegisterFormDTO registerFormDTO, BindingResult bindingResult) {
+    public String registerUser(@Valid @ModelAttribute("registerFormDTO") UserRegisterFormDTO registerFormDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {  // 입력 값 검증에서 오류가 발생하면
             return "user/register";  // 회원가입 페이지로 다시 이동
         }
@@ -45,7 +45,7 @@ public class UserController {
             return "user/register";  // 회원가입 페이지로 다시 이동
         }
 
-        User user = RegisterFormDTO.toCreateUser(registerFormDTO);  // DTO를 User 객체로 변환
+        User user = UserRegisterFormDTO.toCreateUser(registerFormDTO);  // DTO를 User 객체로 변환
         userService.saveUser(user);  // 사용자 저장
 
         return "redirect:/user/login";  // 로그인 페이지로 리다이렉트

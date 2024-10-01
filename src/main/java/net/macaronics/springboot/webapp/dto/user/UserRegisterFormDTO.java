@@ -4,6 +4,7 @@ package net.macaronics.springboot.webapp.dto.user;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterFormDTO {
+public class UserRegisterFormDTO {
     
     @NotEmpty(message = "아이디는 필수 입력 항목입니다.")
     @Size(min = 2, max = 10, message = "아이디는 2자에서 10자 사이여야 합니다.")
@@ -31,6 +32,7 @@ public class RegisterFormDTO {
     @NotEmpty(message = "비밀번호 확인이 필요합니다.")
     private String confirmPassword;
 
+    @Past(message = "생일은 과거 날짜로 입력해야 합니다.")
     private LocalDate birthDate;
     
     private Role role = Role.USER; // 기본값 설정
@@ -41,7 +43,7 @@ public class RegisterFormDTO {
         return password != null && password.equals(confirmPassword);
     }
     
-    public static User toCreateUser(RegisterFormDTO dto) {
+    public static User toCreateUser(UserRegisterFormDTO dto) {
         return User.builder()
             .username(dto.getUsername())
             .password(dto.getPassword())
@@ -49,4 +51,6 @@ public class RegisterFormDTO {
             .role(dto.getRole() != null ? dto.getRole() : Role.USER) // role이 null인 경우 기본값 설정
             .build();
     }
+    
+    
 }

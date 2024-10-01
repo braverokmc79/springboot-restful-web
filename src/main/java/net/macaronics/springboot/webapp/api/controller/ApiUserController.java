@@ -5,37 +5,34 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.validation.BindingResult;
 
-import net.macaronics.springboot.webapp.dto.ResponseDTO;
-import net.macaronics.springboot.webapp.dto.user.RegisterFormDTO;
-import net.macaronics.springboot.webapp.dto.user.UserResponse;
-import net.macaronics.springboot.webapp.entity.User;
-import net.macaronics.springboot.webapp.exception.NotFoundException;
-import net.macaronics.springboot.webapp.service.UserService;
-import net.macaronics.springboot.webapp.utils.PageMaker;
-
-import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import net.macaronics.springboot.webapp.dto.ResponseDTO;
+import net.macaronics.springboot.webapp.dto.user.UserRegisterFormDTO;
+import net.macaronics.springboot.webapp.dto.user.UserResponse;
+import net.macaronics.springboot.webapp.dto.user.UserUpdateFormDTO;
+import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.service.UserService;
+import net.macaronics.springboot.webapp.utils.PageMaker;
 
 @RestController
 @RequestMapping("/api/users")
@@ -101,11 +98,11 @@ public class ApiUserController {
      * @param registerFormDTO
      * @param bindingResult
      * @return
-     * @throws MethodArgumentNotValidException 
+     * @throws Exception 
      */
     @PostMapping
     @Operation(summary = "사용자 생성", description = "새 사용자를 등록합니다.")
-    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterFormDTO registerFormDTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserRegisterFormDTO registerFormDTO, BindingResult bindingResult) throws Exception {
         
         // 입력 검증 오류 처리
         if (bindingResult.hasErrors()) { 
@@ -121,7 +118,7 @@ public class ApiUserController {
         
         
         // DTO를 User 객체로 변환 후 저장
-        User user = RegisterFormDTO.toCreateUser(registerFormDTO);  // DTO를 User 객체로 변환
+        User user = UserRegisterFormDTO.toCreateUser(registerFormDTO);  // DTO를 User 객체로 변환
         User savedUser = userService.saveUser(user);  // 사용자 저장
         
         // 생성된 사용자의 URI 생성
@@ -149,7 +146,7 @@ public class ApiUserController {
     @DeleteMapping("/{id}")
     @Operation(summary = "사용자 삭제", description = "특정 사용자를 삭제합니다.")
     public ResponseEntity<?> deleteUser(@Parameter(description = "아이디", example = "1") @PathVariable Long id){
-  
+      	
         // 사용자 삭제
         userService.deleteUser(id);
                 
@@ -166,9 +163,41 @@ public class ApiUserController {
         return ResponseEntity.ok()
             .body(response);
     }
+    
 
     
+    /**
+     * 5.사용자 수정
+     * @param id
+     * @param userUpdateFormDTO
+     * @param bindingResult
+     * @return
+     * @throws Exception
+     */
+    @PutMapping("/{id}")
+	@Operation(summary = "사용자 수정", description = "특정 사용자를 수정합니다.")
+	public ResponseEntity<?> updateUser(@Parameter(description = "아이디", example = "1") @PathVariable Long id, 
+			@Valid @RequestBody UserUpdateFormDTO userUpdateFormDTO ,BindingResult bindingResult)  throws Exception{
+		
+    	 // 입력 검증 오류 처리
+        if(bindingResult.hasErrors()) { 
+        	  throw  new MethodArgumentNotValidException(null, bindingResult);
+        }
+            
+        
+    	UserResponse response =userService.updateUser(id, userUpdateFormDTO);
+        	
+        // HATEOAS 링크 추가
+        UserResponse userResponse = addUserLinks(response);
+    	
     
+    	return ResponseEntity.ok(ResponseDTO.builder()
+				.code(1)
+				.message("success")
+				.data(userResponse)
+				.build());
+    
+    }
     
     
     
