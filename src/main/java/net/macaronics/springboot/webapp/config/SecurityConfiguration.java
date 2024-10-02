@@ -41,6 +41,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(request -> request
 	                .requestMatchers("/webjars/**","/css/**", "/js/**", "/img/**","/images/**").permitAll()  // 정적 리소스 접근 허용
 	                .requestMatchers("/" ,  "/api/**").permitAll()  // 메인 페이지 접근 허용	                
+	                .requestMatchers("/actuator/**").permitAll()  // 애플리케이션의 모니터링과 관리	                
 	                .requestMatchers("/api-docs","/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**").permitAll()
 	                
 	                .requestMatchers("/user/login", "/user/register", "/h2-console/**").permitAll()  // 로그인, 회원가입, H2 콘솔 접근 허용

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.EntityModel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +22,7 @@ public class UserResponse extends EntityModel<UserResponse> {
 
 	private Long id;
 
+	//@JsonProperty("name")
 	private String username;
 
 	private LocalDate birthDate;
