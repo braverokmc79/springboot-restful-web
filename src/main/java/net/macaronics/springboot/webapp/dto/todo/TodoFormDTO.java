@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.macaronics.springboot.webapp.entity.User;
 
 @Data
 @Builder
@@ -17,6 +18,8 @@ public class TodoFormDTO {
 	private Long id;
 
 	private Long userId;
+	
+	 private User user;
 	
 	private String username;
 

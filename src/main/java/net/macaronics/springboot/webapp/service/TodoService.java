@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 import net.macaronics.springboot.webapp.entity.Todo;
 import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.mapper.TodoMapper;
 import net.macaronics.springboot.webapp.repository.TodoRepository;
 import net.macaronics.springboot.webapp.repository.UserRepository;
 
@@ -23,6 +24,9 @@ public class TodoService {
 
     private final UserRepository userRepository;  // User 정보를 관리하는 Repository
     private final TodoRepository todoRepository;  // Todo 정보를 관리하는 Repository
+    
+    private final TodoMapper todoMapper;
+    
 
     // 특정 사용자의 할 일 목록을 조회하는 메서드 (읽기 전용 트랜잭션)
     @Transactional(readOnly = true)
@@ -53,7 +57,7 @@ public class TodoService {
     public TodoResponseDTO findByIdAndUsername(Long todoId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);  // User ID로 조회, 없으면 예외 발생
         Todo todo = todoRepository.findByIdAndUser(todoId, user);  // 할 일을 ID와 사용자로 조회
-        return Todo.toResponseDTO(todo);  // Todo를 DTO로 변환 후 반환
+        return todoMapper.toTodoResponseDTO(todo);  // Todo를 DTO로 변환 후 반환
     }
     
     // 할 일을 수정하는 메서드 (더티 체킹을 통해 자동으로 변경 사항이 반영됨)

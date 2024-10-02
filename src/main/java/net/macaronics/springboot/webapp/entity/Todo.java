@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +18,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 
 @Entity
 @Data
@@ -27,7 +25,7 @@ import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "user")  // 순환 참조 방지
 public class Todo {
 
     @Id
@@ -35,7 +33,7 @@ public class Todo {
     @Column(name = "todo_id")
     private Long id;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // 사용자와 다대일 관계 설정 (Lazy Loading)
+    @ManyToOne(fetch = FetchType.LAZY)  // CascadeType.ALL 제거
     @JoinColumn(name = "user_id")  // 외래키로 "user_id" 컬럼을 사용
     private User user;
     
@@ -45,15 +43,9 @@ public class Todo {
     private LocalDate targetDate;  // 목표 날짜
     
     private boolean done;  // 완료 여부
-    
-    // Todo 엔티티를 TodoResponseDTO로 변환하는 메서드
-    public static TodoResponseDTO toResponseDTO(Todo todo) {
-        return TodoResponseDTO.builder()
-                .id(todo.getId())  // 할 일 ID 설정
-                .username(todo.getUser().getUsername())  // 사용자 이름 설정
-                .description(todo.getDescription())  // 할 일 설명 설정
-                .targetDate(todo.getTargetDate())  // 목표 날짜 설정
-                .done(todo.isDone())  // 완료 여부 설정
-                .build();
-    }
+      
 }
+
+
+
+
