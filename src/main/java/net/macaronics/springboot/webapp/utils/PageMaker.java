@@ -28,6 +28,11 @@ public class PageMaker {
 
   Page<?>  pageObject;
 
+  
+  public int getPageInt(){	  
+	  return this.getPage() == null ? 0 : this.getPage();
+  }
+  
 
   //MyBatis 사용시
   // MyBatis SQL 의 Mapper 에서 인식해서 가져가는 파라미터 값 메소드 #{pageStart}
@@ -88,6 +93,9 @@ public class PageMaker {
       }return null;
   }
 
+  
+  
+  
   /**
    * javascript page 버튼 클릭  반환
    * @param url

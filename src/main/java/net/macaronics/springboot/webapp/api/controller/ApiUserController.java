@@ -48,7 +48,7 @@ public class ApiUserController {
     }
     
     
-    /**  http://localhost:8080/api/users
+    /** GET =>  http://localhost:8080/api/users
      * 1. 전체 사용자 목록 조회
      * @param pageMaker
      * @return
@@ -80,7 +80,7 @@ public class ApiUserController {
     }
     
     
-    /**   http://localhost:8080/api/users/{id}
+    /** GET =>  http://localhost:8080/api/users/{id}
      * 2. 개별 사용자 조회 메소드 
      * @param id
      * @return
@@ -93,7 +93,8 @@ public class ApiUserController {
     }
     
     
-    /** http://localhost:8080/api/users/
+    
+    /** POST =>   http://localhost:8080/api/users/
      * 3. 사용자 생성 (회원가입) 메소드
      * @param registerFormDTO
      * @param bindingResult
@@ -138,7 +139,7 @@ public class ApiUserController {
     
    
     
-    /** http://localhost:8080/api/users/{id}
+    /** DELETE =>  http://localhost:8080/api/users/{id}
      * 4. 사용자 삭제
      * @param id
      * @return
@@ -167,7 +168,7 @@ public class ApiUserController {
 
     
     /**
-     * 5.사용자 수정
+     * PUT =>  http://localhost:8080/api/users/{id}     5.사용자 수정
      * @param id
      * @param userUpdateFormDTO
      * @param bindingResult
@@ -200,6 +201,7 @@ public class ApiUserController {
     }
     
     
+   
     
     
     

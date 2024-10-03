@@ -3,6 +3,7 @@ package net.macaronics.springboot.webapp.dto.todo;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.RepresentationModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TodoResponseDTO {
+public class TodoResponseDTO  extends RepresentationModel<TodoResponseDTO> {
 
 	private Long id;
 
@@ -39,5 +40,6 @@ public class TodoResponseDTO {
         this.targetDate = targetDate;
         this.done = done;
     }
-    
+
+
 }

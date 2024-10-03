@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "찾을 수 없습니다.")
-public class NotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = -2997057852151179119L;
 
-	public NotFoundException(String message) {		
+	public ResourceNotFoundException(String message) {		
 		 super(message);
 	}
 

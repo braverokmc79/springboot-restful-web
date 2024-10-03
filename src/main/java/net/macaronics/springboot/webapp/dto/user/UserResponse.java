@@ -3,9 +3,7 @@ package net.macaronics.springboot.webapp.dto.user;
 import java.time.LocalDate;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.hateoas.EntityModel;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +16,7 @@ import net.macaronics.springboot.webapp.enums.Role;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse extends EntityModel<UserResponse> {
+public class UserResponse extends RepresentationModel<UserResponse> {
 
 	private Long id;
 

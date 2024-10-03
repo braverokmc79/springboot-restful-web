@@ -3,13 +3,17 @@ package net.macaronics.springboot.webapp.service;
 import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.macaronics.springboot.webapp.dto.todo.TodoCreateDTO;
 import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
+import net.macaronics.springboot.webapp.dto.todo.TodoUpdateDTO;
 import net.macaronics.springboot.webapp.entity.Todo;
 import net.macaronics.springboot.webapp.entity.User;
+import net.macaronics.springboot.webapp.exception.ResourceNotFoundException;
 import net.macaronics.springboot.webapp.mapper.TodoMapper;
 import net.macaronics.springboot.webapp.repository.TodoRepository;
 import net.macaronics.springboot.webapp.repository.UserRepository;
@@ -57,7 +61,7 @@ public class TodoService {
     public TodoResponseDTO findByIdAndUsername(Long todoId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);  // User ID로 조회, 없으면 예외 발생
         Todo todo = todoRepository.findByIdAndUser(todoId, user);  // 할 일을 ID와 사용자로 조회
-        return todoMapper.toTodoResponseDTO(todo);  // Todo를 DTO로 변환 후 반환
+        return todoMapper.convertTodoResponseDTO(todo);  // Todo를 DTO로 변환 후 반환
     }
     
     // 할 일을 수정하는 메서드 (더티 체킹을 통해 자동으로 변경 사항이 반영됨)
@@ -69,4 +73,97 @@ public class TodoService {
         todo.setDone(done);  // 완료 여부 수정
         // 더티 체킹을 통해 수정된 필드들은 자동으로 저장됨
     }
+    
+    
+
+    
+    /**
+     *------------------------------- restFull  -------------------------------------------------------------
+    
+     */
+        
+    /**
+     * todo 목록 가져오기
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    @Transactional(readOnly = true)
+	public Page<TodoResponseDTO> getTodosByUserId(Long userId, PageRequest pageable) {	
+		return todoRepository.findByUserId(userId, pageable).map(todoMapper::convertTodoResponseDTO);
+	}
+	
+    
+    
+    /**
+     * todo 상세정보 가져오기
+     * @param userId
+     * @param todoId
+     * @return
+     */
+    @Transactional(readOnly = true)
+	public TodoResponseDTO getTodoById(Long userId, Long todoId) {
+		Todo todo=todoRepository.findByIdAndUserId(todoId, userId).orElseThrow(
+				()->new ResourceNotFoundException("Todo not found"));		
+		return todoMapper.convertTodoResponseDTO(todo); 
+	}
+	
+    
+
+    /**
+     * todo 저장하기
+     * @param userId
+     * @param createDTO
+     * @return
+     */
+    public TodoResponseDTO createTodo(Long userId, TodoCreateDTO createDTO) {
+    	User user=userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException(userId +" 유저를 찾츨 수 없습니다."));
+    	    	
+    	Todo todo=todoMapper.ofTodo(createDTO);
+    		 todo.setUser(user);
+    		 todo.setDone(false);
+    		 
+        Todo savedTodo = todoRepository.save(todo);
+    	return todoMapper.convertTodoResponseDTO(savedTodo);    	
+    }
+    
+    
+    /**
+     *  todo Update
+     * @param userId
+     * @param todoId
+     * @param updateDTO
+     * @return
+     */
+    public TodoResponseDTO updateTodo(Long userId, Long todoId, TodoUpdateDTO updateDTO) {
+        Todo todo = todoRepository.findByIdAndUserId(todoId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Todo not found"));
+
+        //더티 체킹
+        todo.setDescription(updateDTO.getDescription());
+        todo.setTargetDate(updateDTO.getTargetDate());
+        todo.setDone(updateDTO.isDone());
+
+        return todoMapper.convertTodoResponseDTO(todo);    
+    }
+
+    
+	
+	/**
+	 * todo 삭제
+	 * @param userId
+	 * @param todoId
+	 */
+	public void deleteTodo(Long userId, Long todoId) {
+		  Todo todo = todoRepository.findByIdAndUserId(todoId, userId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Todo not found"));
+		  todoRepository.delete(todo);
+	}
+    
+    
+    
+    
+  
+	
 }
+

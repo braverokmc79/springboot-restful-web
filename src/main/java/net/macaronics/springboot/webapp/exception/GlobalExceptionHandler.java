@@ -45,8 +45,8 @@ public class GlobalExceptionHandler {
      * @param request
      * @return
      */
-    @ExceptionHandler(NotFoundException.class)
-    public final ResponseEntity<?> handleNotFoundException(NotFoundException ex, WebRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<?> handleNotFoundException(ResourceNotFoundException ex, WebRequest request){
         log.warn("Resource not found exception: {}", ex.getMessage());
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
         

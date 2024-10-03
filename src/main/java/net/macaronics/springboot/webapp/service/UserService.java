@@ -11,7 +11,7 @@ import net.macaronics.springboot.webapp.dto.user.UserRegisterFormDTO;
 import net.macaronics.springboot.webapp.dto.user.UserResponse;
 import net.macaronics.springboot.webapp.dto.user.UserUpdateFormDTO;
 import net.macaronics.springboot.webapp.entity.User;
-import net.macaronics.springboot.webapp.exception.NotFoundException;
+import net.macaronics.springboot.webapp.exception.ResourceNotFoundException;
 import net.macaronics.springboot.webapp.repository.TodoRepository;
 import net.macaronics.springboot.webapp.repository.UserRepository;
 
@@ -68,7 +68,7 @@ public class UserService {
 	 * @return
 	 */
 	public UserResponse getUserById(Long id) {
-		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 찾을 수 없습니다."));		
+		User user= userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(id+" 을 찾을 수 없습니다."));		
 		return UserResponse.of(user); 		 
 	}
 
@@ -78,7 +78,7 @@ public class UserService {
 	 * @param id
 	 */
 	public void deleteUser(Long id) {
-		User user= userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 사용자를 찾을 수 없습니다."));			
+		User user= userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(id+" 을 사용자를 찾을 수 없습니다."));			
         todoRepository.deleteByUserId(user.getId());        
 		userRepository.delete(user);		
 	}
@@ -91,7 +91,7 @@ public class UserService {
 	 * @return
 	 */
 	public UserResponse updateUser(Long id, UserUpdateFormDTO updateFormDTO) {
-		User user=userRepository.findById(id).orElseThrow(()->new NotFoundException(id+" 을 사용자를 찾을 수 없습니다."));
+		User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(id+" 을 사용자를 찾을 수 없습니다."));
 		
 		//더티 체킹
 		User updated=User.updateUser(user, updateFormDTO);
