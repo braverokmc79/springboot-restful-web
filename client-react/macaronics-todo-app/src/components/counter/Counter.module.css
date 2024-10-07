@@ -1,0 +1,15 @@
+/* Counter.module.css */
+.counter {
+    background-color: #f0f0f0;
+    padding: 50px;
+    border-radius: 5px;   
+}  
+
+
+.button {
+color: white;
+background-color: blue;
+padding: 8px 16px;
+border: none;
+border-radius: 4px;
+}
