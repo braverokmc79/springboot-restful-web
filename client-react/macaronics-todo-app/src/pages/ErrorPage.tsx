@@ -26,6 +26,7 @@ const ErrorPage: React.FC = () => {
 
   if (error.status === 500) {
     message = error.data.message;
+    console.log(error.data.message);
   }
 
   if (error.status === 404) {

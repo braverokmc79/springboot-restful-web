@@ -12,10 +12,14 @@ import {
   
 const ListTodosComponent:React.FC = () => {
   
+  const today =new Date();
+
+  const targetDate = new Date(today.getFullYear()+12, today.getMonth(), today.getDate());
+
   const todos=[
-     {id:1, description:"test"},
-     {id:2, description:"Learn Full Statck Dev"},
-     {id:3, description:"Learn DevOps"},
+     {id:1, description:"test", done:false, targetDate},
+     {id:2, description:"Learn Full Statck Dev" , done:false, targetDate},
+     {id:3, description:"Learn DevOps", done:false, targetDate},
   ]
 
 
@@ -30,9 +34,10 @@ const ListTodosComponent:React.FC = () => {
                 <TableCaption></TableCaption>
                 <TableHeader className='bg-slate-200'>
                     <TableRow>
-                    <TableHead className="w-[100px]">id</TableHead>                
-                    <TableHead className='text-center'>내용</TableHead>
-                    
+                        <TableHead className="w-[100px]">ID</TableHead>                
+                        <TableHead className='text-center'>내용</TableHead>
+                        <TableHead className='text-center'>is Done?</TableHead>
+                        <TableHead className='text-center'>Target Date</TableHead>                    
                     </TableRow>
                 </TableHeader>
                
@@ -41,9 +46,10 @@ const ListTodosComponent:React.FC = () => {
                     {todos.map((todo) => (
                          <TableRow>
                             <TableCell className="font-medium">{todo.id}</TableCell>
-                            <TableCell>{todo.description}</TableCell>                    
+                            <TableCell>{todo.description}</TableCell>
+                            <TableCell>{todo.done.toString()}</TableCell>      
+                            <TableCell>{todo.targetDate.toDateString()}</TableCell>                          
                         </TableRow>
-
                     ))}
                     
 

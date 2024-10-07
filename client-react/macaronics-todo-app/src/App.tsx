@@ -6,7 +6,7 @@ import ErrorPage from './pages/ErrorPage';
 import RootLayout from './pages/RootLayout';
 import LoginPage from './pages/login/LoginPage';
 import TodoLayout from './components/todo/TodoLayout';
-import ListTodosComponent from './components/todo/ListTodosComponent';
+
 import TodoListPage from './pages/todo/TodoListPage';
 
 //라우트 정보를 담는 객체 배열
