@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import reactLogo from "@/assets/react.svg";
 import {
@@ -13,22 +13,15 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { AuthContextType } from "../security/AuthContext";
+import { useAuth } from "../security/UseAuth";
 
-import { useAuth } from "../security/AuthContext"; // useAuth 훅 import
-
-export interface AuthContextType {
-  number: number;
-  // other properties...
-}
 
 
 const HeaderComponent: React.FC = () => {
+  const authContext = useAuth()  as AuthContextType; // useAuth 훅을 사용하여 number 값 가져오기
+  console.log(  " 인증=======>" ,authContext);
 
-  const { number } = useAuth()  as AuthContextType; // useAuth 훅을 사용하여 number 값 가져오기
-
-
-
-  console.log(  " 인증=======>" ,number);
 
   return (
     <Menubar className="h-16 md:justify-between">
@@ -76,23 +69,30 @@ const HeaderComponent: React.FC = () => {
       </div>
 
       <div className="flex items-center">
-        <MenubarMenu>
-          <MenubarTrigger>회원</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              <Link to="/login">로그인</Link>
-            </MenubarItem>
-            <MenubarItem>
-              회원가입 <MenubarShortcut>⇧⌘Z</MenubarShortcut>
-            </MenubarItem>
-            <MenubarSeparator />               
-          </MenubarContent>     
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger className="cursor-pointer">
-            <Link to="/logout">로그아웃</Link>   
-          </MenubarTrigger>     
-        </MenubarMenu>
+        
+        {authContext && !authContext.isAuthenticated  &&
+            <MenubarMenu>
+            <MenubarTrigger>회원</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <Link to="/login">로그인</Link>
+              </MenubarItem>
+              <MenubarItem>
+                회원가입 <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />               
+            </MenubarContent>     
+          </MenubarMenu>
+        }
+
+          {authContext && authContext.isAuthenticated  &&
+                  <MenubarMenu>
+                    <MenubarTrigger className="cursor-pointer">
+                      <Link to="/logout">로그아웃</Link>   
+                    </MenubarTrigger>     
+                  </MenubarMenu>
+
+          }
       </div>
     </Menubar>
   );

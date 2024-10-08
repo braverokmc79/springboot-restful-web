@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
+import { AuthContextType } from './AuthContext';
+import { useAuth } from './UseAuth';
 
 const LoginComponent: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-
+  const authContext = useAuth()  as AuthContextType;
   const navigator =useNavigate();
 
   function handleSubmit() {
     
-    
+
     if (!username || !password) {
       setShowError(true);
       setShowSuccess(false);
@@ -23,6 +24,7 @@ const LoginComponent: React.FC = () => {
       console.log('로그인 성공');
       setShowSuccess(true);
       setShowError(false);
+      authContext.setIsAuthenticated(true);
       navigator("/todo/"+username);
 
     } else {

@@ -1,4 +1,5 @@
-import LoginComponent from "@/components/todo/LoginComponent";
+
+import LoginComponent from "@/components/security/LoginComponent";
 import React from "react";
 
 const LoginPage: React.FC = () => {
