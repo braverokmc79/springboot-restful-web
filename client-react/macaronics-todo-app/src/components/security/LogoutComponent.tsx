@@ -10,6 +10,7 @@ const LogoutComponent:React.FC = () => {
 
   useEffect(()=>{
     authContext.setIsAuthenticated(false);
+
     navigator("/login");
   }, []);
   

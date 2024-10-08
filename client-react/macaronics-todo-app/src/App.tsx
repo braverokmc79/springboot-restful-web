@@ -9,6 +9,7 @@ import TodoLayout from './components/todo/TodoLayout';
 import TodoListPage from './pages/todo/TodoListPage';
 import AuthProvider from './components/security/AuthContext';
 import LogoutComponent from './components/security/LogoutComponent';
+import { isAuthenticatedCheck } from './components/security/auth';
 
 //라우트 정보를 담는 객체 배열
 const router =createBrowserRouter( [
@@ -21,7 +22,8 @@ const router =createBrowserRouter( [
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: 'todo',      
+        path: 'todo', 
+        loader: isAuthenticatedCheck,
         element: <TodoLayout />,
         children: [
           { 

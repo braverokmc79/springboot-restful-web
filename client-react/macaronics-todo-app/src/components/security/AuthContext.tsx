@@ -1,4 +1,4 @@
-import React, { createContext,  useState } from "react";
+import React, { createContext,  useEffect,  useState } from "react";
 
 export const AuthContext = createContext({});
 
@@ -15,6 +15,17 @@ export interface AuthContextType {
 
 const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+   
+  useEffect(() => {
+    if(isAuthenticated){       
+        console.log("localStorage 로그인 성공: ");
+        localStorage.setItem("isAuthenticated", true.toString());
+    }else{
+        console.log("localStorage 로그아웃 : ");
+        localStorage.removeItem("isAuthenticated");
+    }
+    
+  }, [isAuthenticated]);
 
 
   return (

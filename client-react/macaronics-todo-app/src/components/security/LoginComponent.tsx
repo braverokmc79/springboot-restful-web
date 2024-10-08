@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { AuthContextType } from './AuthContext';
 import { useAuth } from './UseAuth';
+import { isAuthenticatedCheck } from './auth';
 
 const LoginComponent: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -22,13 +23,19 @@ const LoginComponent: React.FC = () => {
 
     if (username === 'test' && password === '1111') {
       console.log('로그인 성공');
-      setShowSuccess(true);
-      setShowError(false);
+      // setShowSuccess(true);
+      // setShowError(false);
       authContext.setIsAuthenticated(true);
-      navigator("/todo/"+username);
+      setTimeout(() => {
+        if(isAuthenticatedCheck()===null){
+          navigator("/todo/"+username);
+        } 
+      }, 300);
+      
 
     } else {
       console.log("로그인 실패");
+      authContext.setIsAuthenticated(false);
       setShowSuccess(false);
       setShowError(true);
     }
