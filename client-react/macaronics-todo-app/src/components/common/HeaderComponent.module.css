@@ -1,0 +1,21 @@
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin-bottom: 5px;
+    background-color: black;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger.open .hamburger-top {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.open .hamburger-middle {
+    opacity: 0;
+  }
+
+  .hamburger.open .hamburger-bottom {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }

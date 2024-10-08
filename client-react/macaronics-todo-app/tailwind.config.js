@@ -4,6 +4,7 @@ export default {
     content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',  // TypeScript 파일 경로 추가
+	"./node_modules/@/components/ui/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
   	extend: {
@@ -56,5 +57,8 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	require("tailwindcss-animate"),
+
+],
 }

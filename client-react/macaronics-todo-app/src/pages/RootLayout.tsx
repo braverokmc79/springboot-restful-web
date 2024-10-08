@@ -8,12 +8,8 @@ const RootLayout: React.FC = () => {
     <>
       <main className="w-[1580px] mx-auto">
         <HeaderComponent />
-
         <Outlet />
-
-        
       </main>
-
       <FooterComponent />
     </>
   );

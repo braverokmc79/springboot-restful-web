@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
+// import { AuthContext } from '../security/AuthContext';
+// import { AuthContextType } from './HeaderComponent';
 
 const FooterComponent:React.FC = () => {
+  
+  // const authContext = useContext(AuthContext) as AuthContextType; 
+  // console.log(  " FooterComponent 인증=======>" ,authContext.number);
+
   return (
-    <div className='fixed bottom-0 w-full bg-gray-800 text-white texy-center py-4 '>
+    <footer className='fixed bottom-0 w-full bg-gray-800 text-white text-center py-4 '>
       하단
-    </div>
+    </footer>
   )
 }
 

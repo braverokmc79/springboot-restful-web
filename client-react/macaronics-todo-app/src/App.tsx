@@ -1,5 +1,4 @@
 import { createBrowserRouter , RouterProvider} from 'react-router-dom';
-import './App.css'
 import TodoApp from './pages/todo/TodoApp'
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
@@ -8,6 +7,7 @@ import LoginPage from './pages/login/LoginPage';
 import TodoLayout from './components/todo/TodoLayout';
 
 import TodoListPage from './pages/todo/TodoListPage';
+import AuthProvider from './components/security/AuthContext';
 
 //라우트 정보를 담는 객체 배열
 const router =createBrowserRouter( [
@@ -56,7 +56,11 @@ const router =createBrowserRouter( [
 
 
 function App() {
-  return <RouterProvider router={router} />     ;  
+  return( 
+  <AuthProvider>
+    <RouterProvider router={router} />     ;  
+  </AuthProvider>
+  )
 }
 
 export default App
