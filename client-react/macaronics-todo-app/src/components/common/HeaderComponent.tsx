@@ -13,9 +13,8 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { AuthContext } from "../security/AuthContext"; // 변경: AuthContext를 직접 가져옴
 
-
+import { useAuth } from "../security/AuthContext"; // useAuth 훅 import
 
 export interface AuthContextType {
   number: number;
@@ -24,14 +23,12 @@ export interface AuthContextType {
 
 
 const HeaderComponent: React.FC = () => {
-  const authContext = useContext(AuthContext) as AuthContextType; 
 
-  // authContext가 null일 경우를 처리하는 것이 좋습니다.
-  if (!authContext) {
-    return null; // 또는 로딩 스피너를 보여줄 수 있습니다.
-  }
+  const { number } = useAuth()  as AuthContextType; // useAuth 훅을 사용하여 number 값 가져오기
 
-  console.log(  " 인증=======>" ,authContext.number);
+
+
+  console.log(  " 인증=======>" ,number);
 
   return (
     <Menubar className="h-16 md:justify-between">
