@@ -20,7 +20,7 @@ import { useAuth } from "../security/UseAuth";
 
 const HeaderComponent: React.FC = () => {
   const authContext = useAuth()  as AuthContextType; // useAuth 훅을 사용하여 number 값 가져오기
-  console.log(  " 인증=======>" ,authContext);
+  //console.log(  " 인증=======>" ,authContext);
 
 
   return (

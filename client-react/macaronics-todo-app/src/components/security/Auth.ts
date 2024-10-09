@@ -59,7 +59,7 @@ export function checkAuthLoader() {
 }
 
 export function isAuthenticatedCheck() {
-    console.log("로컬스토리지 체크  isAuthenticatedCheck: ");
+    //console.log("로컬스토리지 체크  isAuthenticatedCheck: ");
     const isAuthenticated = localStorage.getItem('isAuthenticated');  
     if (!isAuthenticated) {
       return redirect('/login');

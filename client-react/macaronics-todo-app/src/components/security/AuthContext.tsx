@@ -18,10 +18,10 @@ const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
    
   useEffect(() => {
     if(isAuthenticated){       
-        console.log("localStorage 로그인 성공: ");
+        //console.log("localStorage 로그인 성공: ");
         localStorage.setItem("isAuthenticated", true.toString());
     }else{
-        console.log("localStorage 로그아웃 : ");
+        //console.log("localStorage 로그아웃 : ");
         localStorage.removeItem("isAuthenticated");
     }
     

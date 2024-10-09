@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 const TodoApp:React.FC = () => {
   const { username } = useParams();
-  console.log(" param  : username  =>",username);
+  //console.log(" param  : username  =>",username);
 
   return (
     <div className='TodoApp'>

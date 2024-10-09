@@ -33,3 +33,9 @@ const ExampleComponent = () => {
 };
 
 export default ExampleComponent;
+
+
+
+///  POST 사용 설정
+const [payload, setPayload] = useState<PostPayload>({ title: "", content: "" });  
+const { data, loading, error } = useApi<PostPayload, PostResponse>(() => postApiData<PostPayload, PostResponse>("/posts", payload));
