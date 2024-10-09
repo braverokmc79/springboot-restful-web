@@ -1,5 +1,6 @@
 import { getApiData } from '@/actions/axiosActions';
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
+import LoadingSpinner from '../common/LoadingComponent';
 
 const WelcomeComponent:React.FC = () => {
   const [data, setData] = useState<unknown>(null);
@@ -23,14 +24,16 @@ const WelcomeComponent:React.FC = () => {
 
 
 
-  if (loading) return <p className='text-3xl font-bold text-center mt-10'>로딩중...</p>;
+  if (loading) return  <LoadingSpinner  />;
   if (error) return <p className='text-3xl font-bold text-center mt-10'>Error occurred: {(error as Error).message}</p>;
 
 
+
+  
     return (
     <div className='Welcome'>          
       <div className='text-3xl font-bold text-center mt-10'>
-         Todo Home 환영합니다. - {data}
+         Todo Home 환영합니다. - {data as ReactNode}
       </div>
       
     </div>

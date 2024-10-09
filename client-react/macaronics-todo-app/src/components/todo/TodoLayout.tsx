@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const TodoLayout:React.FC = () => {
   return (
-    <div className='TodoApp'>
+    <div>
          <Outlet />
     </div>
   )
