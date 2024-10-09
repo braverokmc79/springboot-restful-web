@@ -1,11 +1,14 @@
 import { TodoDTO } from '@/dto/TodoDTO';
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 interface TodoDetailProps {
     todo: TodoDTO;
 }
 const TodoDetailComponent: React.FC<TodoDetailProps> = ({todo}) => {
+
+    const navigator=useNavigate();
 
 
   return (
@@ -34,6 +37,12 @@ const TodoDetailComponent: React.FC<TodoDetailProps> = ({todo}) => {
         </p>
       </div>
       <div className="flex justify-between mt-8">
+         <button className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            onClick={()=>navigator(-1)}
+         >
+          이전화면
+        </button>
+
         <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           수정하기
         </button>

@@ -1,57 +1,52 @@
-import { getApiData } from '@/actions/axiosActions';
-import TodoDetailComponent from '@/components/todo/TodoDetailComponent';
-import { queryClient } from '@/utils/queryClient';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { getApiData } from "@/actions/axiosActions";
+import LoadingSpinner from "@/components/common/LoadingComponent";
+import TodoDetailComponent from "@/components/todo/TodoDetailComponent";
+import { TodoDTO } from "@/dto/TodoDTO";
+import { queryClient } from "@/utils/queryClient";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { useParams } from "react-router-dom";
 
 const TodoDetail: React.FC = () => {
-  const todo = {
-    id: 1,
-    //title;
-    description: '리액트 프로젝트를 마무리하고 리팩토링 작업을 진행하세요.',
-    done: true, // 상태: 완료됨, 진행 중, 대기 중
-    // priority: 'High', // 우선순위: 높음, 중간, 낮음
-    targetDate: '2024-10-15', // 마감일
-  };
+  const { todoId } = useParams<{ todoId: string }>();
+
+  //useQuery로 데이터 가져오기
+  const {data: todo, isLoading,error,} = useQuery({    
+    queryKey: ["todo", todoId],
+    queryFn: async () => {
+        return await getApiData(`/api/users/1/todos/${todoId}`).then(response => response.apiData);      
+    },
+  });
 
 
-//   id: number;
-//   description: string;
-//   done: boolean;
-//   targetDate: Date;
-//   userId ?:number;
-//   username ?:string;
-//   num ?:number;
-//   link?:ApiResponseLink[];
-
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <p>에러가 발생했습니다: {(error as Error).message}</p>;
+  
 
   return (
     <>
-        <TodoDetailComponent todo={todo} />
+      {todo ? (
+        <TodoDetailComponent todo={todo as TodoDTO} />
+      ) : (
+        <p>할 일을 찾을 수 없습니다.</p>
+      )}
     </>
   );
 };
 
 
+
 interface LoaderParams {
-    todoId: string;
+  todoId: string;
 }
- 
+// loader 함수
+export async function loader({ params }: { params: LoaderParams }) {
+  const { todoId } = params;
 
-export async function loader({params} : { params: LoaderParams }) {
-    const {todoId} = params;
-    ///api/users/{userId}/todos/{todoId}
-    console.log(" params  :   ",todoId );
-    return  queryClient.fetchQuery({
-        queryKey: ["todo", params.todoId],
-        queryFn: ({ signal }) => getApiData(`/api/users/1/todos/${todoId}`),
-    });
-
-    
+  return queryClient.fetchQuery({
+    queryKey: ["todo", todoId],
+    queryFn: async () => await getApiData(`/api/users/1/todos/${todoId}`).then(response => response.apiData),
+  });
 }
-
 
 export default TodoDetail;
-
-
-
