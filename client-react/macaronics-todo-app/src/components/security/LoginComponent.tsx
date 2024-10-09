@@ -28,7 +28,7 @@ const LoginComponent: React.FC = () => {
       authContext.setIsAuthenticated(true);
       setTimeout(() => {
         if(isAuthenticatedCheck()===null){
-          navigator("/todo/"+username);
+          navigator("/");
         } 
       }, 300);
       

@@ -8,7 +8,7 @@ const RootLayout: React.FC = () => {
     <>
       <main className="w-[1580px] mx-auto">
         <HeaderComponent />
-        <div className="w-screen md:w-full">
+        <div className="w-screen md:w-full min-h-screen mb-20">
           <Outlet />
         </div>
         

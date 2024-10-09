@@ -1,5 +1,4 @@
 import { createBrowserRouter , RouterProvider} from 'react-router-dom';
-import TodoApp from './pages/todo/TodoApp'
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
 import RootLayout from './pages/RootLayout';
@@ -10,6 +9,7 @@ import TodoListPage from './pages/todo/TodoListPage';
 import AuthProvider from './components/security/AuthContext';
 import LogoutComponent from './components/security/LogoutComponent';
 import { isAuthenticatedCheck } from './components/security/auth';
+import TodoDetail , {loader as todoDetailLoader} from './pages/todo/TodoDetail';
 
 //라우트 정보를 담는 객체 배열
 const router =createBrowserRouter( [
@@ -28,14 +28,15 @@ const router =createBrowserRouter( [
         children: [
           { 
             index: true,
-          },
-          {
-            path: ':username',
-            element: <TodoApp />
-          },
+          },          
           {
             path: 'list',
             element: <TodoListPage />
+          },
+          {
+            path: ':todoId',
+            element: <TodoDetail />,
+            loader:todoDetailLoader
           }
                  
         ]
@@ -46,8 +47,7 @@ const router =createBrowserRouter( [
         children: [
           { 
             index: true,
-          },
-                 
+          },                 
         ]
       }
       ,
@@ -57,8 +57,7 @@ const router =createBrowserRouter( [
         children: [
           { 
             index: true,
-          },
-                 
+          },                 
         ]
       }
       
