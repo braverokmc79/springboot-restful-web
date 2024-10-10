@@ -2,7 +2,7 @@
 
 export interface ApiResponse{
     code: number;
-    data: ApiResponseData |null;
+    data: ApiResponseData | null;
     errorCode:string |null;
     message: string |null;
   }
