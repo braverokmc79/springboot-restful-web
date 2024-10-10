@@ -36,9 +36,13 @@ const TodoDetail: React.FC = () => {
 
 
 
+
+
 interface LoaderParams {
   todoId: string;
 }
+
+
 // loader 함수
 export async function loader({ params }: { params: LoaderParams }) {
   const { todoId } = params;

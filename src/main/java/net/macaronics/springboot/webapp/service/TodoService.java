@@ -52,8 +52,8 @@ public class TodoService {
     }
 
     // 특정 할 일을 ID로 삭제하는 메서드
-    public void deleteById(Long id) {
-        todoRepository.deleteById(id);  // ID로 할 일 삭제
+    public void deleteById(Long todoId) {
+        todoRepository.deleteById(todoId);  // ID로 할 일 삭제
     }
 
     // 특정 할 일을 ID와 사용자 ID로 조회하여 DTO로 반환하는 메서드

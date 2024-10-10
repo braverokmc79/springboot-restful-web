@@ -4,12 +4,11 @@ import ErrorPage from './pages/ErrorPage';
 import RootLayout from './pages/RootLayout';
 import LoginPage from './pages/login/LoginPage';
 import TodoLayout from './components/todo/TodoLayout';
-
 import TodoListPage from './pages/todo/TodoListPage';
 import AuthProvider from './components/security/AuthContext';
-import LogoutComponent from './components/security/LogoutComponent';
-import { isAuthenticatedCheck } from './components/security/auth';
+import LogoutComponent from './components/logout/LogoutComponent';
 import TodoDetail , {loader as todoDetailLoader} from './pages/todo/TodoDetail';
+import { isAuthenticatedCheck } from './components/security/Auth';
 
 
 //라우트 정보를 담는 객체 배열

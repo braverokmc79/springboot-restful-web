@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
-import { AuthContextType } from './AuthContext';
-import { useAuth } from './UseAuth';
-import { isAuthenticatedCheck } from './auth';
+import { isAuthenticatedCheck } from '../security/Auth';
+import { useAuth } from '../security/UseAuth';
+import { AuthContextType } from '../security/AuthContext';
+
 
 const LoginComponent: React.FC = () => {
   const [username, setUsername] = useState('');

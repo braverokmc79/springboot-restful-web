@@ -11,7 +11,6 @@ const TodoApp:React.FC = () => {
   return (
     <div className='TodoApp'>
        <WelcomeComponent /> 
-
     </div>
   )
 }

@@ -21,7 +21,7 @@ export interface ApiResponse{
     id: number;
     description: string;
     done: boolean;
-    targetDate: string | null;;
+    targetDate: string | null;
     userId ?:number;
     username ?:string;
     num ?:number;

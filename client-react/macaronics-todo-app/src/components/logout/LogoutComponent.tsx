@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './UseAuth';
-import { AuthContextType } from './AuthContext';
+import { useAuth } from '../security/UseAuth';
+import { AuthContextType } from '../security/AuthContext';
 
 
 const LogoutComponent:React.FC = () => {
@@ -10,7 +10,6 @@ const LogoutComponent:React.FC = () => {
 
   useEffect(()=>{
     authContext.setIsAuthenticated(false);
-
     navigator("/login");
   }, []);
   
