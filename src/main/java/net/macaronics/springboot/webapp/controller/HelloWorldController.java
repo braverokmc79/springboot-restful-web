@@ -1,18 +1,20 @@
 package net.macaronics.springboot.webapp.controller;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Getter
-@Setter
-public class HelloWorldBean {
+@RestController
+@RequestMapping("/test/")
+public class HelloWorldController {
 
-	private String helloStr;
-	
-	
-	public HelloWorldBean(String helloStr){
-		this.helloStr = helloStr;
+
+	//http://localhost:8080/test/hello
+	@GetMapping("/hello")
+	public String hello(String helloStr){
+		return "hello";
 	}
 
+	
 	
 }

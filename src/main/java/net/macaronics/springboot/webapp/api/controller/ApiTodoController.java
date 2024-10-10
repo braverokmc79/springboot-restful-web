@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.macaronics.springboot.webapp.dto.ResponseDTO;
 import net.macaronics.springboot.webapp.dto.todo.TodoCreateDTO;
 import net.macaronics.springboot.webapp.dto.todo.TodoResponseDTO;
@@ -36,6 +37,7 @@ import net.macaronics.springboot.webapp.utils.PageMaker;
 @RestController
 @RequestMapping("/api/users/{userId}/todos")
 @RequiredArgsConstructor
+@Slf4j
 public class ApiTodoController {
 
     private final TodoService todoService;
@@ -57,7 +59,8 @@ public class ApiTodoController {
     @Operation(summary = "전체 Todo 목록 조회", description = "특정 사용자의 모든 Todo를 페이지네이션하여 조회합니다.")
     @GetMapping
     public ResponseEntity<?> getAllTodos(@PathVariable Long userId,@Valid PageMaker pageMaker) {
-
+    	log.info(" /api/users/{userId}/todos   :", userId);
+    	
         int pageInt = pageMaker.getPage() == null ? 0 : pageMaker.getPage();
         PageRequest pageable = PageRequest.of(pageInt, 10); // 예: 페이지당 10개
 
@@ -68,7 +71,8 @@ public class ApiTodoController {
         CollectionModel<TodoResponseDTO> collectionModel = CollectionModel.of(todosWithLinks);
         collectionModel.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ApiTodoController.class).getAllTodos(userId, pageMaker)).withSelfRel());
 
-        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+        //.cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+        return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .code(1)
                         .message("success")

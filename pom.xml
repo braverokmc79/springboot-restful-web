@@ -197,10 +197,10 @@
 
 
 
-		<dependency>
+<!--		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
 		    <artifactId>jackson-dataformat-xml</artifactId>
-		</dependency>
+		</dependency>-->
 
 		
 		
@@ -228,6 +228,13 @@
 	        <version>1.5.3.Final</version>
 	        <scope>provided</scope>
 	    </dependency>
+
+		
+		<dependency>
+		    <groupId>p6spy</groupId>
+		    <artifactId>p6spy</artifactId>
+		    <version>3.9.1</version>
+		</dependency>
 
 
 	</dependencies>

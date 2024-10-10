@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import net.macaronics.springboot.webapp.enums.Role;
+
 @Configuration  // 스프링에서 설정 클래스를 나타냄
 public class SecurityConfiguration {
 
@@ -40,7 +42,12 @@ public class SecurityConfiguration {
         // 권한에 따른 요청 URL 접근 허용/제한 설정
         http.authorizeHttpRequests(request -> request
 	                .requestMatchers("/webjars/**","/css/**", "/js/**", "/img/**","/images/**").permitAll()  // 정적 리소스 접근 허용
-	                .requestMatchers("/" ,  "/api/**").permitAll()  // 메인 페이지 접근 허용	                
+	                
+	                .requestMatchers("/").permitAll()
+	                .requestMatchers("/api/users/**").permitAll()
+	                //.requestMatchers("/api/users/**").hasAnyAuthority(Role.USER.toString(), Role.ADMIN.toString() )  	                
+	                
+	                .requestMatchers("/test/**").permitAll()  
 	                .requestMatchers("/actuator/**").permitAll()  // 애플리케이션의 모니터링과 관리	                
 	                .requestMatchers("/explorer/**").permitAll()  // API 탐색 도구
 	                .requestMatchers("/api-docs","/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**").permitAll()

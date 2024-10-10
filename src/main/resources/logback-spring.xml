@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 파일에 로그를 기록하는 appender -->
+    <appender name="P6SPY_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/spy.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 콘솔에 로그를 출력하는 appender -->
+	<appender name="P6SPY_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder>
+	        <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n%n</pattern>	         
+	    </encoder>
+	</appender>
+
+    <!-- P6Spy 로거 설정 -->
+    <logger name="p6spy" level="INFO" additivity="false">
+        <appender-ref ref="P6SPY_FILE" />
+        <appender-ref ref="P6SPY_CONSOLE" />
+    </logger>
+
+    <!-- 루트 로거 설정 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
